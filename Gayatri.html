@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine ❤️</title>
+<style>
+body {
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow:hidden;
+}
+
+/* Floating hearts */
+.bg-heart {
+  position:absolute;
+  bottom:-20px;
+  color:rgba(255,255,255,0.6);
+  animation: float linear infinite;
+  pointer-events:none;
+  will-change:transform;
+}
+
+@keyframes float {
+  0% { transform: translate3d(0,0,0) scale(1); opacity:1; }
+  100% { transform: translate3d(0,-120vh,0) scale(1.4); opacity:0; }
+}
+
+.card {
+  background:white;
+  padding:28px 20px 35px;
+  border-radius:20px;
+  text-align:center;
+  width:90%;
+  max-width:360px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.25);
+  position:relative;
+  z-index:2;
+  animation:fadeIn 1.2s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:scale(0.9);} to{opacity:1;transform:scale(1);} }
+
+h1 { color:#e6005c; font-size:24px; margin-bottom:18px; }
+.buttons { position:relative; height:160px; }
+
+/* YES button wrapper */
+.yes-wrapper {
+  position:absolute;
+  left:50%;
+  top:25px;
+  transform:translateX(-50%);
+}
+
+/* Heart shape */
+.yes-heart {
+  width:46px;
+  height:46px;
+  background:#ff0033;
+  position:relative;
+  transform:rotate(-45deg);
+  animation:beat 1.3s infinite;
+}
+.yes-heart::before,
+.yes-heart::after {
+  content:"";
+  width:46px;
+  height:46px;
+  background:#ff0033;
+  border-radius:50%;
+  position:absolute;
+}
+.yes-heart::before{top:-23px; left:0;}
+.yes-heart::after{left:23px; top:0;}
+
+@keyframes beat {
+  0%{transform:rotate(-45deg) scale(1);}
+  50%{transform:rotate(-45deg) scale(1.08);}
+  100%{transform:rotate(-45deg) scale(1);}
+}
+
+/* YES text overlay */
+.yes-text {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:bold;
+  color:white;
+  pointer-events:none;
+}
+
+/* Make the whole button area clickable */
+.yes-btn {
+  background:transparent;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  position:relative;
+  z-index:1;
+}
+
+/* NO button */
+.no {
+  position:absolute;
+  padding:10px 18px;
+  font-size:16px;
+  background:#666;
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  top:100px;
+  left:20px;
+  z-index:2;
+}
+
+.message {
+  display:none;
+  margin-top:20px;
+  font-size:18px;
+  color:#e6005c;
+  line-height:1.5;
+  animation:pop 0.6s ease;
+}
+@keyframes pop { from{transform:scale(0.8);opacity:0;} to{transform:scale(1);opacity:1;} }
+
+.back-btn {
+  display:none;
+  margin-top:20px;
+  padding:10px 22px;
+  font-size:16px;
+  background:#ff758c;
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<script>
+for(let i=0;i<12;i++){
+  const h=document.createElement("div");
+  h.className="bg-heart";
+  h.textContent="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(14+Math.random()*18)+"px";
+  h.style.animationDuration=(6+Math.random()*6)+"s";
+  h.style.transform="translate3d(0,0,0)";
+  document.body.appendChild(h);
+}
+</script>
+
+<div class="card">
+<h1>Gayatri ❤️<br>Will you be my Valentine?</h1>
+
+<div class="buttons" id="buttons">
+  <div class="yes-wrapper">
+    <button class="yes-btn" id="yesBtn">
+      <div class="yes-heart"></div>
+      <div class="yes-text">YES</div>
+    </button>
+  </div>
+  <button class="no" id="noBtn">No</button>
+</div>
+
+<div class="message" id="message">
+  🎉 Yaaayyyy!!! 🎉<br><br>
+  7 years married,<br>
+  and I still choose you ❤️<br><br>
+  Forever my Valentine 💑
+</div>
+
+<button class="back-btn" id="backBtn">⬅ Back</button>
+</div>
+
+<script>
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const buttons=document.getElementById("buttons");
+const message=document.getElementById("message");
+const backBtn=document.getElementById("backBtn");
+
+/* Move NO button randomly */
+function moveNo(event){
+  if(event) event.preventDefault();
+  const area=buttons.getBoundingClientRect();
+  const btn=noBtn.getBoundingClientRect();
+  const x=Math.random()*(area.width-btn.width-20)+10;
+  const y=Math.random()*(area.height-btn.height-90)+90;
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+}
+
+/* Support desktop and mobile */
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("touchstart",moveNo,{passive:false});
+
+/* YES click */
+yesBtn.addEventListener("click",()=>{
+  buttons.style.display="none";
+  message.style.display="block";
+  backBtn.style.display="inline-block";
+});
+
+/* Back button */
+backBtn.addEventListener("click",()=>{
+  buttons.style.display="block";
+  message.style.display="none";
+  backBtn.style.display="none";
+  noBtn.style.left="20px";
+  noBtn.style.top="100px";
+});
+</script>
+</body>
+</html>
